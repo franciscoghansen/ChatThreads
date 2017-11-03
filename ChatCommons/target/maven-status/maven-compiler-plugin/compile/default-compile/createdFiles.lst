@@ -1,0 +1,7 @@
+br\com\franciscohansen\chat\model\Sala.class
+br\com\franciscohansen\chat\model\Acao.class
+br\com\franciscohansen\chat\model\Usuario.class
+br\com\franciscohansen\chat\model\ConexaoUsuario.class
+br\com\franciscohansen\chat\model\enums\ETipoMensagem.class
+br\com\franciscohansen\chat\model\Mensagem.class
+br\com\franciscohansen\chat\model\enums\EAcao.class

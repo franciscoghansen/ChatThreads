@@ -1,0 +1,4 @@
+br\com\franciscohansen\chat\client\interfaces\IClientCallback.class
+br\com\franciscohansen\chat\client\thread\ChatListenerThread.class
+br\com\franciscohansen\chat\client\ChatForm.class
+br\com\franciscohansen\chat\client\ClientMain.class
