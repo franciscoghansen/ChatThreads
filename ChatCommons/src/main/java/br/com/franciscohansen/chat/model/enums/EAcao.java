@@ -8,6 +8,7 @@ public enum EAcao {
     MENSAGEM,
     CRIA_SALA,
     ENTRA_SALA,
+    SAI_SALA,
     EXCLUI_SALA,
     ERRO,
     LISTA_SALAS,

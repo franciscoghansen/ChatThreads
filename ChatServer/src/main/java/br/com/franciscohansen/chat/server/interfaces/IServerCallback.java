@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface IServerCallback {
     void atualizaUsuarios( List<Usuario> usuarios );
-    void atuaizaSalas( List<Sala> salas );
+    void atualizaSalas();
     void addLog( Class<?> clz, String message );
+
+    List<Sala> getSalas();
+
 }

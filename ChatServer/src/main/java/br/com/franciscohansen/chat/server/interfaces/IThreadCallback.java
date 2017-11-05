@@ -5,7 +5,7 @@ import br.com.franciscohansen.chat.model.Usuario;
 
 public interface IThreadCallback {
 
-    boolean criaSala(Sala sala);
+    boolean criaSala();
 
     boolean excluiSala(Sala sala);
 

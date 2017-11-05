@@ -1,22 +1,26 @@
 package br.com.franciscohansen.chat.client;
 
+import br.com.franciscohansen.chat.client.interfaces.IAcaoListener;
 import br.com.franciscohansen.chat.client.interfaces.IChatScreen;
 import br.com.franciscohansen.chat.client.interfaces.IClientCallback;
 import br.com.franciscohansen.chat.client.interfaces.IClientThread;
+import br.com.franciscohansen.chat.client.listener.AcaoListener;
 import br.com.franciscohansen.chat.model.Acao;
 import br.com.franciscohansen.chat.model.Mensagem;
 import br.com.franciscohansen.chat.model.Sala;
 import br.com.franciscohansen.chat.model.Usuario;
+import br.com.franciscohansen.chat.model.enums.EAcao;
 import br.com.franciscohansen.chat.model.enums.ETipoMensagem;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class ChatForm implements ActionListener, IClientCallback, IChatScreen {
+public class ChatForm implements IClientCallback {
 
     JPanel pnlBackground;
     private JPanel pnlBottom;
@@ -30,49 +34,25 @@ public class ChatForm implements ActionListener, IClientCallback, IChatScreen {
     private final Sala sala;
     private final IClientThread thread;
     private final DefaultComboBoxModel<Usuario> comboBoxModel = new DefaultComboBoxModel<>();
+    private final IAcaoListener listener;
 
-    public ChatForm(Usuario usuario, Sala sala, IClientThread thread) {
+    public ChatForm(Usuario usuario, Sala sala, IClientThread thread) throws IOException {
         this.usuario = usuario;
         this.sala = sala;
         this.thread = thread;
-        this.cbUsuario.setModel(this.comboBoxModel);
-    }
-
-    @Override
-    public void addMessage(Mensagem msg) {
-        if (ETipoMensagem.USUARIO_PRIVADA.equals(msg.getTipoMensagem()) &&
-                !msg.getUsuarioPara().equals(this.usuario) &&
-                !msg.getUsuarioDe().equals(this.usuario)) {
-            return;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String line = sdf.format(Calendar.getInstance().getTime()) + " - " + msg.getUsuarioDe().getNick() + " diz";
-        if (msg.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA)) {
-            line += " em privado";
-        }
-        if (!msg.getTipoMensagem().equals(ETipoMensagem.TODOS) &&
-                msg.getUsuarioPara() != null &&
-                msg.getUsuarioPara().getNick() != null &&
-                !msg.getUsuarioPara().getNick().isEmpty()) {
-            line += " para " + msg.getUsuarioPara().getNick();
-        }
-        line += ":\n" + msg.getMensagem() + "\n";
-        txChat.append(line);
-    }
-
-    @Override
-    public void atualizaUsuarios(List<Usuario> usuarios) {
-        usuarios.remove(this.usuario);
-        comboBoxModel.removeAllElements();
-        comboBoxModel.addElement(new Usuario("TODOS"));
-        for (Usuario u : usuarios) {
-            comboBoxModel.addElement(u);
-        }
-    }
-
-    @Override
-    public void atualizaSalas(List<Sala> salas) {
-
+        this.thread.enviaAcao(new Acao(this.usuario, this.sala));
+        this.listener = new AcaoListener()
+                .setUsuario(this.usuario)
+                .setSala(this.sala)
+                .setClientThread(this.thread)
+                .setComboUsers(this.cbUsuario)
+                .setTextArea(this.txChat)
+                .setEdtMsg(this.edtMsg)
+                .setBtnEnviar(this.btnEnviar)
+                .setChkPrivado(this.chkPrivate);
+        Acao acao = new Acao(EAcao.LISTA_USUARIOS);
+        acao.setSala(this.sala);
+        thread.enviaAcao(acao);
     }
 
     @Override
@@ -82,48 +62,8 @@ public class ChatForm implements ActionListener, IClientCallback, IChatScreen {
 
     @Override
     public void chamaAcao(Acao acao) {
-        switch (acao.getTipoAcao()) {
-            case MENSAGEM: {
-                Mensagem msg = (Mensagem) acao.getObjetoAcao();
-                if (msg.getSala().equals(getSala())) {
-                    addMessage(msg);
-                }
-                break;
-            }
-            case LISTA_USUARIOS: {
-                List<Usuario> usuarios = (List<Usuario>) acao.getObjetoAcao();
-                atualizaUsuarios(usuarios);
-                break;
-            }
-        }
+        this.listener.actionPerformed(acao);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if ((edtMsg.getText() == null) || edtMsg.getText().isEmpty()) {
-            return;
-        }
-
-        Mensagem msg = new Mensagem();
-        msg.setMensagem(edtMsg.getText());
-        msg.setUsuarioDe(this.usuario);
-        msg.setSala(getSala());
-        Usuario usuario = (Usuario) cbUsuario.getSelectedItem();
-        if (usuario != null && !usuario.getNick().equalsIgnoreCase("TODOS")) {
-            msg.setUsuarioPara(usuario);
-            msg.setTipoMensagem(ETipoMensagem.USUARIO);
-        } else {
-            msg.setTipoMensagem(ETipoMensagem.TODOS);
-        }
-        if (chkPrivate.isSelected() && msg.getTipoMensagem().equals(ETipoMensagem.USUARIO)) {
-            msg.setTipoMensagem(ETipoMensagem.USUARIO_PRIVADA);
-        }
-        thread.enviaMensagem(msg);
-
-        edtMsg.setText("");
-
-    }
-
 
     public JPanel getPnlBackground() {
         return pnlBackground;

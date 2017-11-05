@@ -1,7 +1,9 @@
 package br.com.franciscohansen.chat.client;
 
+import br.com.franciscohansen.chat.client.interfaces.IAcaoListener;
 import br.com.franciscohansen.chat.client.interfaces.IChatScreen;
 import br.com.franciscohansen.chat.client.interfaces.IClientCallback;
+import br.com.franciscohansen.chat.client.listener.AcaoListener;
 import br.com.franciscohansen.chat.client.thread.ChatListenerThread;
 import br.com.franciscohansen.chat.model.Acao;
 import br.com.franciscohansen.chat.model.Mensagem;
@@ -15,6 +17,8 @@ import javax.swing.*;
 import javax.swing.plaf.SliderUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class ClientMain implements ActionListener, IClientCallback, IChatScreen {
+public class ClientMain extends WindowAdapter implements ActionListener, IClientCallback {
 
     private static final String AC_ENTRASALA = "entra-sala";
     private static final String AC_LOGIN = "login";
@@ -59,14 +63,20 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
     private Socket socket;
     private int port;
     private ChatListenerThread thread;
-    private final DefaultComboBoxModel<Usuario> comboBoxModel = new DefaultComboBoxModel<>();
-    private final DefaultListModel<Sala> listModel = new DefaultListModel<>();
+    private final IAcaoListener listener;
 
     public ClientMain() {
         disableAll();
         initBotoes();
-        this.lstSalas.setModel(this.listModel);
-        this.cbUsuarios.setModel(comboBoxModel);
+        this.listener = new AcaoListener()
+                .setListSalas(lstSalas)
+                .setComboUsers(cbUsuarios)
+                .setTextArea(txChatGlobal)
+                .setSala(new Sala("TODOS"))
+                .setBtnEnviar(btnEnviar)
+                .setChkPrivado(chkPrivate)
+                .setEdtMsg(edtMsg);
+
     }
 
     private void enableOrDisable(boolean enabled) {
@@ -92,7 +102,6 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
         btnEnviar.setActionCommand(AC_MSG);
         btnLogin.addActionListener(this);
         btnEntraSala.addActionListener(this);
-        btnEnviar.addActionListener(this);
     }
 
 
@@ -124,7 +133,7 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
             acao.setObjetoAcao(usuario);
             outputStream.writeObject(acao);
             Acao retorno = (Acao) inputStream.readObject();
-            if (acao.getTipoAcao().equals(EAcao.ERRO)) {
+            if (retorno.getTipoAcao().equals(EAcao.ERRO)) {
                 JOptionPane.showMessageDialog(pnlBackground, acao.getObjetoAcao().toString(), "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
@@ -134,6 +143,7 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
             thread = new ChatListenerThread(socket, inputStream, outputStream);
             thread.addCallback(this);
             thread.start();
+            this.listener.setClientThread(thread).setUsuario(this.usuario);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -145,41 +155,24 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
         this.btnLogin.setEnabled(false);
     }
 
-    private void enviaMsgGlobal() {
-        if (edtMsg.getText() == null || edtMsg.getText().isEmpty()) {
-            return;
-        }
-
-        Mensagem msg = new Mensagem();
-        msg.setMensagem(edtMsg.getText());
-        msg.setUsuarioDe(this.usuario);
-        msg.setSala(getSala());
-        Usuario usuario = (Usuario) cbUsuarios.getSelectedItem();
-        if (usuario != null && !usuario.getNick().equalsIgnoreCase("TODOS")) {
-            msg.setUsuarioPara(usuario);
-            msg.setTipoMensagem(ETipoMensagem.USUARIO);
-        } else {
-            msg.setTipoMensagem(ETipoMensagem.TODOS);
-        }
-        if (chkPrivate.isSelected() && msg.getTipoMensagem().equals(ETipoMensagem.USUARIO)) {
-            msg.setTipoMensagem(ETipoMensagem.USUARIO_PRIVADA);
-        }
-        thread.enviaMensagem(msg);
-
-        edtMsg.setText("");
-    }
 
     private void entraSala() {
         Sala sala = (Sala) lstSalas.getSelectedValue();
-        if( sala == null ){
+        if (sala == null) {
             JOptionPane.showMessageDialog(pnlBackground, "Selecione uma sala para continuar");
             return;
         }
-        JFrame frameSala = new JFrame(ChatForm.class.getSimpleName());
-        frameSala.setContentPane(new ChatForm(this.usuario, sala, thread).getPnlBackground());
-        frameSala.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frameSala.pack();
-        frameSala.setVisible(true);
+        try {
+            ChatForm form = new ChatForm(this.usuario, sala, thread);
+            JFrame frameSala = new JFrame(ChatForm.class.getSimpleName());
+            frameSala.setContentPane(form.getPnlBackground());
+            frameSala.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frameSala.pack();
+            frameSala.setVisible(true);
+            thread.addCallback(form);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -193,23 +186,11 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
                 fazLogin();
                 break;
             }
-            case AC_MSG: {
-                enviaMsgGlobal();
-                break;
-            }
             default:
                 throw new UnsupportedOperationException("Operation Not Supported");
         }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame(ClientMain.class.getSimpleName());
-        frame.setContentPane(new ClientMain().pnlBackground);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.pack();
-        frame.setVisible(true);
-    }
 
     @Override
     public Sala getSala() {
@@ -218,77 +199,33 @@ public class ClientMain implements ActionListener, IClientCallback, IChatScreen 
 
     @Override
     public void chamaAcao(Acao acao) {
-        switch (acao.getTipoAcao()) {
-            case BANIR: {
-                Usuario u = (Usuario) acao.getObjetoAcao();
-                if (u == this.usuario) {
-                    JOptionPane.showMessageDialog(pnlBackground, "Você foi banido pelo administrador!");
-                    System.exit(0);
-                } else {
-                    txChatGlobal.append("O usuário " + u.getNick() + " foi banido!");
-                }
-                break;
-            }
-            case MENSAGEM:
-                Mensagem msg = (Mensagem) acao.getObjetoAcao();
-                if (msg.getSala().getNome().equalsIgnoreCase(this.getSala().getNome())) {
-                    addMessage(msg);
-                }
-                break;
-            case CRIA_SALA:
-            case EXCLUI_SALA:
-            case LISTA_SALAS: {
-                List<Sala> salas = (List<Sala>) acao.getObjetoAcao();
-                atualizaSalas(salas);
-                break;
-            }
-            case ERRO:
-                break;
-            case LISTA_USUARIOS: {
-                List<Usuario> usuarios = (List<Usuario>) acao.getObjetoAcao();
-                atualizaUsuarios(usuarios);
-                break;
+        this.listener.actionPerformed(acao);
+    }
+
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        super.windowClosed(e);
+        if (this.usuario != null) {
+            Acao acao = new Acao();
+            acao.setTipoAcao(EAcao.LOGOUT);
+            acao.setObjetoAcao(this.usuario);
+            try {
+                thread.enviaAcao(acao);
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         }
     }
 
-    @Override
-    public void addMessage(Mensagem msg) {
-        if (msg.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA) &&
-                !msg.getUsuarioPara().equals(this.usuario) &&
-                !msg.getUsuarioDe().equals(this.usuario)) {
-            return;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String line = sdf.format(Calendar.getInstance().getTime()) + " - " + msg.getUsuarioDe().getNick() + " diz";
-        if (msg.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA)) {
-            line += " em privado";
-        }
-        if (!msg.getTipoMensagem().equals(ETipoMensagem.TODOS) &&
-                msg.getUsuarioPara() != null &&
-                msg.getUsuarioPara().getNick() != null &&
-                !msg.getUsuarioPara().getNick().isEmpty()) {
-            line += " para " + msg.getUsuarioPara().getNick();
-        }
-        line += ":\n" + msg.getMensagem() + "\n";
-        txChatGlobal.append(line);
-    }
-
-    @Override
-    public void atualizaUsuarios(List<Usuario> usuarios) {
-        usuarios.remove(this.usuario);
-        comboBoxModel.removeAllElements();
-        comboBoxModel.addElement(new Usuario("TODOS"));
-        for (Usuario u : usuarios) {
-            comboBoxModel.addElement(u);
-        }
-    }
-
-    @Override
-    public void atualizaSalas(List<Sala> salas) {
-        listModel.clear();
-        for (Sala sala : salas) {
-            listModel.addElement(sala);
-        }
+    public static void main(String[] args) {
+        ClientMain mainInstance = new ClientMain();
+        JFrame frame = new JFrame(ClientMain.class.getSimpleName());
+        frame.setContentPane(mainInstance.pnlBackground);
+        frame.addWindowListener(mainInstance);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

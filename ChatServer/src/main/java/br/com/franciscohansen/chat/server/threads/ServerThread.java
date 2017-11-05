@@ -7,7 +7,6 @@ import br.com.franciscohansen.chat.server.interfaces.IChatCallback;
 import br.com.franciscohansen.chat.server.interfaces.IServerCallback;
 import br.com.franciscohansen.chat.server.interfaces.IThreadCallback;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -33,36 +32,15 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
 
 
     @Override
-    public boolean criaSala(Sala sala) {
-        callback.addLog(ServerThread.class, "Criou sala " + sala.getNome());
-        salas.add(sala);
-        for (ConexaoUsuario con : conexoes) {
-            ObjectOutputStream out = con.getOutputStream();
-            Acao acao = new Acao();
-            acao.setTipoAcao(EAcao.CRIA_SALA);
-            acao.setObjetoAcao(salas);
-            try {
-                out.writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public boolean criaSala() {
+        enviaSalas();
         return true;
     }
 
     @Override
     public boolean excluiSala(Sala sala) {
-        salas.remove(sala);
-        for (ConexaoUsuario con : conexoes) {
-            Acao acao = new Acao();
-            acao.setObjetoAcao(salas);
-            acao.setTipoAcao(EAcao.EXCLUI_SALA);
-            try {
-                con.getOutputStream().writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        callback.getSalas().remove(sala);
+        enviaSalas();
         return true;
     }
 
@@ -75,28 +53,16 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
             Acao acao = new Acao();
             acao.setTipoAcao(EAcao.BANIR);
             acao.setObjetoAcao(usuario);
-            try {
-                out.writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            envia(con, acao);
             if (con.getUsuario().equals(usuario)) {
                 aExcluir = con;
             }
         }
         if (aExcluir != null) {
-            conexoes.remove(aExcluir);
+            removeConexao(aExcluir);
         }
-        Acao acao = new Acao();
-        acao.setObjetoAcao(getUsuarios());
-        acao.setTipoAcao(EAcao.LISTA_USUARIOS);
-        for (ConexaoUsuario con : conexoes) {
-            try {
-                con.getOutputStream().writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        enviaUsuarios();
+        enviaSalas();
         return true;
     }
 
@@ -113,41 +79,67 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
 
     @Override
     public boolean doLogin(Usuario usuario, ObjectOutputStream outputStream) {
-        try {
-            ConexaoUsuario con = new ConexaoUsuario();
-            con.setOutputStream(outputStream);
-            con.setUsuario(usuario);
-            this.conexoes.add(con);
-            this.callback.addLog(this.getClass(), "Usuário " + usuario.getNick() + " entrou no chat");
+        ConexaoUsuario con = new ConexaoUsuario();
+        con.setOutputStream(outputStream);
+        con.setUsuario(usuario);
+        this.conexoes.add(con);
+        this.callback.addLog(this.getClass(), "Usuário " + usuario.getNick() + " entrou no chat");
 
-            this.callback.atualizaUsuarios(getUsuarios());
-            Acao acao = new Acao();
-            acao.setTipoAcao(EAcao.LOGIN_OK);
-            outputStream.writeObject(acao);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        this.callback.atualizaUsuarios(getUsuarios());
+        callback.atualizaSalas();
+
         Acao acao = new Acao();
-        acao.setObjetoAcao(getUsuarios());
-        acao.setTipoAcao(EAcao.LISTA_USUARIOS);
-        for (ConexaoUsuario con : conexoes) {
-            try {
-                con.getOutputStream().writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        acao.setTipoAcao(EAcao.LOGIN_OK);
+        envia(con, acao);
+
+        enviaUsuarios();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
         }
-        acao.setTipoAcao(EAcao.LISTA_SALAS);
-        acao.setObjetoAcao(this.salas);
-        for (ConexaoUsuario con : conexoes) {
-            try {
-                con.getOutputStream().writeObject(acao);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        enviaSalas();
         return true;
+    }
+
+    @Override
+    public boolean entraSala(Usuario usuario, Sala sala) {
+        for (Sala s : callback.getSalas()) {
+            if (s.getNome().equals(sala.getNome())) {
+                s.getUsuarioList().add(usuario);
+            }
+        }
+        enviaSalas();
+        return true;
+    }
+
+    @Override
+    public void doLogout(Usuario usuario) {
+        Acao acao = new Acao();
+        acao.setObjetoAcao(usuario);
+        acao.setTipoAcao(EAcao.LOGOUT);
+        for (ConexaoUsuario con : conexoes) {
+            if (!con.getUsuario().equals(usuario)) {
+                envia(con, acao);
+            } else {
+                removeConexao(con);
+            }
+        }
+    }
+
+    private void removeConexao(ConexaoUsuario con) {
+        Usuario u = con.getUsuario();
+        conexoes.remove(con);
+        for (Sala s : salas) {
+            s.getUsuarioList().remove(u);
+        }
+        this.callback.atualizaUsuarios(getUsuarios());
+        this.callback.atualizaSalas();
+        enviaUsuarios();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
+        }
+        enviaSalas();
     }
 
     @Override
@@ -155,20 +147,74 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
         Acao acao = new Acao();
         acao.setObjetoAcao(message);
         acao.setTipoAcao(EAcao.MENSAGEM);
-        try {
-            if (message.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA)) {
-                for (ConexaoUsuario con : conexoes) {
-                    if (con.getUsuario().equals(message.getUsuarioPara())) {
-                        con.getOutputStream().writeObject(acao);
-                    }
-                }
-            } else {
-                for (ConexaoUsuario con : conexoes) {
-                    con.getOutputStream().writeObject(acao);
+        if (message.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA)) {
+            for (ConexaoUsuario con : conexoes) {
+                if (con.getUsuario().equals(message.getUsuarioPara()) ||
+                        con.getUsuario().equals(message.getUsuarioDe())) {
+                    envia(con, acao);
                 }
             }
+        } else {
+            for (ConexaoUsuario con : conexoes) {
+                envia(con, acao);
+
+            }
+        }
+    }
+
+    @Override
+    public void listaUsuarios(Sala sala) {
+        Acao acao = new Acao(EAcao.LISTA_USUARIOS);
+        for (Sala s : this.callback.getSalas()) {
+            if (s.equals(sala)) {
+                acao.setObjetoAcao(sala.getUsuarioList());
+                acao.setSala(s);
+                break;
+            }
+        }
+        for (ConexaoUsuario con : conexoes) {
+            envia(con, acao);
+        }
+    }
+
+
+    private List<Usuario> getUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        for (ConexaoUsuario conexao : conexoes) {
+            usuarios.add(conexao.getUsuario());
+        }
+        return usuarios;
+    }
+
+    private void enviaSalas() {
+        List<Sala> lst = new ArrayList<>();
+        lst.addAll(this.callback.getSalas());
+        Acao acao = new Acao(EAcao.LISTA_SALAS, lst);
+        for (ConexaoUsuario con : conexoes) {
+            envia(con, acao);
+        }
+    }
+
+    private void enviaUsuarios() {
+        Acao acao = new Acao(EAcao.LISTA_USUARIOS, getUsuarios(), new Sala("TODOS"));
+        for (ConexaoUsuario con : conexoes) {
+            envia(con, acao);
+        }
+    }
+
+    private boolean envia(ConexaoUsuario con, Object object) {
+
+        try {
+            Thread.sleep(500);
+            con.getOutputStream().writeObject(object);
+            con.getOutputStream().flush();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -187,12 +233,5 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
         }
     }
 
-    private List<Usuario> getUsuarios() {
-        List<Usuario> usuarios = new ArrayList<>();
-        for (ConexaoUsuario conexao : conexoes) {
-            usuarios.add(conexao.getUsuario());
-        }
-        return usuarios;
-    }
 
 }

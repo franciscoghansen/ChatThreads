@@ -33,16 +33,21 @@ public class ChatListenerThread extends Thread implements IClientThread {
     }
 
     @Override
-   public void enviaMensagem(Mensagem mensagem){
+    public void enviaMensagem(Mensagem mensagem) {
         Acao acao = new Acao();
         acao.setTipoAcao(EAcao.MENSAGEM);
         acao.setObjetoAcao(mensagem);
-       try {
-           this.outputStream.writeObject(acao);
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-   }
+        try {
+            this.outputStream.writeObject(acao);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void enviaAcao(Acao acao) throws IOException {
+        this.outputStream.writeObject(acao);
+    }
 
     @Override
     public void run() {

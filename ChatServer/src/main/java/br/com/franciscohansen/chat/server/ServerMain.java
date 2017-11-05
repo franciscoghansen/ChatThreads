@@ -86,7 +86,7 @@ public class ServerMain implements ActionListener, IServerCallback {
     private void init() {
         tabOpcoes.setVisible(false);
         btnParar.setEnabled(false);
-        salaDefaultListModelWithTodos.addElement(new Sala("TODOS", null));
+        salaDefaultListModelWithTodos.addElement(new Sala("TODOS", this.usuarios));
 
         lstSalas.setModel(salaDefaultListModelWithTodos);
         lstAcoesSalas.setModel(salaDefaultListModel);
@@ -97,7 +97,7 @@ public class ServerMain implements ActionListener, IServerCallback {
     private void populaSalasModel(List<Sala> salas) {
         this.salaDefaultListModel.clear();
         this.salaDefaultListModelWithTodos.clear();
-        this.salaDefaultListModelWithTodos.addElement(new Sala("TODOS", null));
+        this.salaDefaultListModelWithTodos.addElement(new Sala("TODOS", usuarios));
         for (Sala sala : salas) {
             salaDefaultListModelWithTodos.addElement(sala);
             salaDefaultListModel.addElement(sala);
@@ -120,11 +120,10 @@ public class ServerMain implements ActionListener, IServerCallback {
             return;
         }
         if (nome != null && !nome.isEmpty()) {
-            Sala sala = new Sala(nome, null);
-            System.out.println(sala.toString());
-            salaDefaultListModelWithTodos.addElement(sala);
-            salaDefaultListModel.addElement(sala);
-            this.serverThread.criaSala(sala);
+            Sala sala = new Sala(nome);
+            this.salas.add(sala);
+            atualizaSalas();
+            this.serverThread.criaSala();
         }
     }
 
@@ -168,6 +167,20 @@ public class ServerMain implements ActionListener, IServerCallback {
         }
     }
 
+    private void baneUsuario() {
+        Usuario u = (Usuario) lstAcoesUsuarios.getSelectedValue();
+        if (u == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um usuário para banir");
+            return;
+        }
+        this.serverThread.baneUsuario(u);
+    }
+
+    private void excluiSala() {
+        //TODO finalizar
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -184,17 +197,11 @@ public class ServerMain implements ActionListener, IServerCallback {
                 break;
             }
             case AC_EXCLUISALA: {
-                Mensagem msg = new Mensagem();
-                msg.setMensagem("TESTE");
-                msg.setSala(new Sala("TODOS", null));
-                Usuario usuario = new Usuario();
-                usuario.setNick("ADMIN");
-                msg.setUsuarioDe(usuario);
-                msg.setTipoMensagem(ETipoMensagem.TODOS);
-                this.serverThread.sendMessage(msg);
+                excluiSala();
                 break;
             }
             case AC_BANEUSUARIO: {
+                baneUsuario();
                 break;
             }
             default:
@@ -222,9 +229,8 @@ public class ServerMain implements ActionListener, IServerCallback {
     }
 
     @Override
-    public void atuaizaSalas(List<Sala> salas) {
-        this.salas.clear();
-        this.salas.addAll(salas);
+    public void atualizaSalas() {
+        this.populaSalasModel(salas);
     }
 
     @Override
@@ -233,5 +239,10 @@ public class ServerMain implements ActionListener, IServerCallback {
         String logMsg = sdf.format(Calendar.getInstance().getTime()) + "@" + clz.getSimpleName() + ":\n";
         logMsg += message + "\n";
         txLog.append(logMsg);
+    }
+
+    @Override
+    public List<Sala> getSalas() {
+        return this.salas;
     }
 }

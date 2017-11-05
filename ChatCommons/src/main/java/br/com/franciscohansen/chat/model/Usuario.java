@@ -26,4 +26,19 @@ public class Usuario implements Serializable {
     public String toString() {
         return nick;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Usuario usuario = (Usuario) o;
+
+        return nick != null ? nick.equals(usuario.nick) : usuario.nick == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return nick != null ? nick.hashCode() : 0;
+    }
 }
