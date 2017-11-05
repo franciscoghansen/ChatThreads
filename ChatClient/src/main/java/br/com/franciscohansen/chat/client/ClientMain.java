@@ -1,34 +1,23 @@
 package br.com.franciscohansen.chat.client;
 
 import br.com.franciscohansen.chat.client.interfaces.IAcaoListener;
-import br.com.franciscohansen.chat.client.interfaces.IChatScreen;
 import br.com.franciscohansen.chat.client.interfaces.IClientCallback;
 import br.com.franciscohansen.chat.client.listener.AcaoListener;
 import br.com.franciscohansen.chat.client.thread.ChatListenerThread;
 import br.com.franciscohansen.chat.model.Acao;
-import br.com.franciscohansen.chat.model.Mensagem;
 import br.com.franciscohansen.chat.model.Sala;
 import br.com.franciscohansen.chat.model.Usuario;
 import br.com.franciscohansen.chat.model.enums.EAcao;
-import br.com.franciscohansen.chat.model.enums.ETipoMensagem;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.swing.*;
-import javax.swing.plaf.SliderUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 
-public class ClientMain extends WindowAdapter implements ActionListener, IClientCallback {
+public class ClientMain extends JFrame implements ActionListener, IClientCallback {
 
     private static final String AC_ENTRASALA = "entra-sala";
     private static final String AC_LOGIN = "login";
@@ -66,6 +55,7 @@ public class ClientMain extends WindowAdapter implements ActionListener, IClient
     private final IAcaoListener listener;
 
     public ClientMain() {
+
         disableAll();
         initBotoes();
         this.listener = new AcaoListener()
@@ -77,6 +67,12 @@ public class ClientMain extends WindowAdapter implements ActionListener, IClient
                 .setChkPrivado(chkPrivate)
                 .setEdtMsg(edtMsg);
 
+        setContentPane(this.pnlBackground);
+        setTitle("Chat Threads");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pack();
+        setVisible(true);
     }
 
     private void enableOrDisable(boolean enabled) {
@@ -164,11 +160,10 @@ public class ClientMain extends WindowAdapter implements ActionListener, IClient
         }
         try {
             ChatForm form = new ChatForm(this.usuario, sala, thread);
-            JFrame frameSala = new JFrame(ChatForm.class.getSimpleName());
-            frameSala.setContentPane(form.getPnlBackground());
-            frameSala.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frameSala.pack();
-            frameSala.setVisible(true);
+            form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            form.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            form.pack();
+            form.setVisible(true);
             thread.addCallback(form);
         } catch (IOException e) {
             e.printStackTrace();
@@ -202,10 +197,11 @@ public class ClientMain extends WindowAdapter implements ActionListener, IClient
         this.listener.actionPerformed(acao);
     }
 
-
     @Override
-    public void windowClosed(WindowEvent e) {
-        super.windowClosed(e);
+    public void dispose() {
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente sair") == JOptionPane.NO_OPTION) {
+            return;
+        }
         if (this.usuario != null) {
             Acao acao = new Acao();
             acao.setTipoAcao(EAcao.LOGOUT);
@@ -216,16 +212,13 @@ public class ClientMain extends WindowAdapter implements ActionListener, IClient
                 e1.printStackTrace();
             }
         }
+        super.dispose();
+        System.exit(0);
+
     }
 
     public static void main(String[] args) {
         ClientMain mainInstance = new ClientMain();
-        JFrame frame = new JFrame(ClientMain.class.getSimpleName());
-        frame.setContentPane(mainInstance.pnlBackground);
-        frame.addWindowListener(mainInstance);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.pack();
-        frame.setVisible(true);
+
     }
 }

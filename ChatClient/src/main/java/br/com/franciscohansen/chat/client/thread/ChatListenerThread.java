@@ -6,6 +6,7 @@ import br.com.franciscohansen.chat.model.Acao;
 import br.com.franciscohansen.chat.model.Mensagem;
 import br.com.franciscohansen.chat.model.enums.EAcao;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -51,15 +52,19 @@ public class ChatListenerThread extends Thread implements IClientThread {
 
     @Override
     public void run() {
-        while (true) {
-            try {
+        try {
+            while (true) {
+
                 Acao acao = (Acao) inputStream.readObject();
                 for (IClientCallback callback : callbackList) {
-                    callback.chamaAcao(acao);
+                    if (callback != null) {
+                        callback.chamaAcao(acao);
+                    }
                 }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
             }
+        } catch (IOException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Erro de conexão ao servidor. \nO Chat será encerrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
     }
 }

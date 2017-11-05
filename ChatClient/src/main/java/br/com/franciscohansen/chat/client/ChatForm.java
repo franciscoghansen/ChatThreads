@@ -1,26 +1,19 @@
 package br.com.franciscohansen.chat.client;
 
 import br.com.franciscohansen.chat.client.interfaces.IAcaoListener;
-import br.com.franciscohansen.chat.client.interfaces.IChatScreen;
 import br.com.franciscohansen.chat.client.interfaces.IClientCallback;
 import br.com.franciscohansen.chat.client.interfaces.IClientThread;
+import br.com.franciscohansen.chat.client.interfaces.IListenerCallback;
 import br.com.franciscohansen.chat.client.listener.AcaoListener;
 import br.com.franciscohansen.chat.model.Acao;
-import br.com.franciscohansen.chat.model.Mensagem;
 import br.com.franciscohansen.chat.model.Sala;
 import br.com.franciscohansen.chat.model.Usuario;
 import br.com.franciscohansen.chat.model.enums.EAcao;
-import br.com.franciscohansen.chat.model.enums.ETipoMensagem;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 
-public class ChatForm implements IClientCallback {
+public class ChatForm extends JFrame implements IClientCallback, IListenerCallback {
 
     JPanel pnlBackground;
     private JPanel pnlBottom;
@@ -33,10 +26,14 @@ public class ChatForm implements IClientCallback {
     private final Usuario usuario;
     private final Sala sala;
     private final IClientThread thread;
-    private final DefaultComboBoxModel<Usuario> comboBoxModel = new DefaultComboBoxModel<>();
     private final IAcaoListener listener;
 
+    private boolean disconnected;
+
     public ChatForm(Usuario usuario, Sala sala, IClientThread thread) throws IOException {
+        disconnected = false;
+        setContentPane(this.pnlBackground);
+        setTitle("Chat Threads - Sala: " + sala.getNome());
         this.usuario = usuario;
         this.sala = sala;
         this.thread = thread;
@@ -49,11 +46,14 @@ public class ChatForm implements IClientCallback {
                 .setTextArea(this.txChat)
                 .setEdtMsg(this.edtMsg)
                 .setBtnEnviar(this.btnEnviar)
-                .setChkPrivado(this.chkPrivate);
+                .setChkPrivado(this.chkPrivate)
+                .setCallback(this)
+                .setFrame(this);
         Acao acao = new Acao(EAcao.LISTA_USUARIOS);
         acao.setSala(this.sala);
         thread.enviaAcao(acao);
     }
+
 
     @Override
     public Sala getSala() {
@@ -65,71 +65,21 @@ public class ChatForm implements IClientCallback {
         this.listener.actionPerformed(acao);
     }
 
-    public JPanel getPnlBackground() {
-        return pnlBackground;
+
+    @Override
+    public void dispose() {
+        if (!disconnected) {
+            try {
+                this.thread.enviaAcao(new Acao(EAcao.SAI_SALA, this.usuario, this.sala));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.dispose();
     }
 
-    public void setPnlBackground(JPanel pnlBackground) {
-        this.pnlBackground = pnlBackground;
-    }
-
-    public JPanel getPnlBottom() {
-        return pnlBottom;
-    }
-
-    public void setPnlBottom(JPanel pnlBottom) {
-        this.pnlBottom = pnlBottom;
-    }
-
-    public JTextField getEdtMsg() {
-        return edtMsg;
-    }
-
-    public void setEdtMsg(JTextField edtMsg) {
-        this.edtMsg = edtMsg;
-    }
-
-    public JComboBox getCbUsuario() {
-        return cbUsuario;
-    }
-
-    public void setCbUsuario(JComboBox cbUsuario) {
-        this.cbUsuario = cbUsuario;
-    }
-
-    public JButton getBtnEnviar() {
-        return btnEnviar;
-    }
-
-    public void setBtnEnviar(JButton btnEnviar) {
-        this.btnEnviar = btnEnviar;
-    }
-
-    public JTextArea getTxChat() {
-        return txChat;
-    }
-
-    public void setTxChat(JTextArea txChat) {
-        this.txChat = txChat;
-    }
-
-    public JCheckBox getChkPrivate() {
-        return chkPrivate;
-    }
-
-    public void setChkPrivate(JCheckBox chkPrivate) {
-        this.chkPrivate = chkPrivate;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public IClientThread getThread() {
-        return thread;
-    }
-
-    public DefaultComboBoxModel<Usuario> getComboBoxModel() {
-        return comboBoxModel;
+    @Override
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
     }
 }

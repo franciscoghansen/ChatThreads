@@ -21,7 +21,6 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
     private final ServerSocket serverSocket;
 
     private final List<ConexaoUsuario> conexoes = new ArrayList<>();
-    private final List<Sala> salas = new ArrayList<>();
     private final IServerCallback callback;
 
 
@@ -39,8 +38,12 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
 
     @Override
     public boolean excluiSala(Sala sala) {
+        callback.addLog(getClass(), "Excluindo sala " + sala.getNome());
         callback.getSalas().remove(sala);
-        enviaSalas();
+        callback.atualizaSalas();
+        Acao acao = new Acao(EAcao.EXCLUI_SALA, (Object) sala);
+        broadcast(acao);
+//        enviaSalas();
         return true;
     }
 
@@ -48,11 +51,8 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
     public boolean baneUsuario(Usuario usuario) {
         callback.addLog(ServerThread.class, "Banindo usuário " + usuario.getNick());
         ConexaoUsuario aExcluir = null;
+        Acao acao = new Acao( EAcao.BANIR, usuario );
         for (ConexaoUsuario con : conexoes) {
-            ObjectOutputStream out = con.getOutputStream();
-            Acao acao = new Acao();
-            acao.setTipoAcao(EAcao.BANIR);
-            acao.setObjetoAcao(usuario);
             envia(con, acao);
             if (con.getUsuario().equals(usuario)) {
                 aExcluir = con;
@@ -103,6 +103,8 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
 
     @Override
     public boolean entraSala(Usuario usuario, Sala sala) {
+        callback.addLog(getClass(), "Usuário " + usuario.getNick() + " entrou na sala " + sala.getNome());
+        enviaMensagemAdmin(sala, "Usuário " + usuario.getNick() + " entrou na sala");
         for (Sala s : callback.getSalas()) {
             if (s.getNome().equals(sala.getNome())) {
                 s.getUsuarioList().add(usuario);
@@ -113,7 +115,24 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
     }
 
     @Override
+    public boolean saiSala(Usuario usuario, Sala sala) {
+        callback.addLog(getClass(), "Usuário " + usuario.getNick() + " saiu da sala " + sala.getNome());
+        enviaMensagemAdmin(sala, "Usuário " + usuario.getNick() + " saiu da sala");
+        for (Sala s : callback.getSalas()) {
+            if (s.equals(sala.getNome())) {
+                s.getUsuarioList().remove(usuario);
+            }
+        }
+        this.callback.atualizaUsuarios(getUsuarios());
+        this.callback.atualizaSalas();
+        enviaUsuarios();
+        enviaSalas();
+        return true;
+    }
+
+    @Override
     public void doLogout(Usuario usuario) {
+        callback.addLog(getClass(), "Usuário " + usuario.getNick() + " saiu do chat");
         Acao acao = new Acao();
         acao.setObjetoAcao(usuario);
         acao.setTipoAcao(EAcao.LOGOUT);
@@ -129,7 +148,7 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
     private void removeConexao(ConexaoUsuario con) {
         Usuario u = con.getUsuario();
         conexoes.remove(con);
-        for (Sala s : salas) {
+        for (Sala s : this.callback.getSalas()) {
             s.getUsuarioList().remove(u);
         }
         this.callback.atualizaUsuarios(getUsuarios());
@@ -155,11 +174,21 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
                 }
             }
         } else {
-            for (ConexaoUsuario con : conexoes) {
-                envia(con, acao);
-
-            }
+            broadcast(acao);
         }
+    }
+
+    private void enviaMensagemAdmin(Sala sala, String msg) {
+        Acao acao = new Acao(EAcao.MENSAGEM);
+        acao.setSala(sala);
+
+        Mensagem m = new Mensagem();
+        m.setSala(sala);
+        m.setTipoMensagem(ETipoMensagem.ADMIN);
+        m.setMensagem(msg);
+        acao.setObjetoAcao(m);
+
+        broadcast(acao);
     }
 
     @Override
@@ -167,14 +196,17 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
         Acao acao = new Acao(EAcao.LISTA_USUARIOS);
         for (Sala s : this.callback.getSalas()) {
             if (s.equals(sala)) {
-                acao.setObjetoAcao(sala.getUsuarioList());
+                acao.setObjetoAcao(s.getUsuarioList());
                 acao.setSala(s);
                 break;
             }
         }
-        for (ConexaoUsuario con : conexoes) {
-            envia(con, acao);
-        }
+        broadcast(acao);
+    }
+
+    @Override
+    public void listaSalas() {
+        enviaSalas();
     }
 
 
@@ -190,9 +222,7 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
         List<Sala> lst = new ArrayList<>();
         lst.addAll(this.callback.getSalas());
         Acao acao = new Acao(EAcao.LISTA_SALAS, lst);
-        for (ConexaoUsuario con : conexoes) {
-            envia(con, acao);
-        }
+        broadcast(acao);
     }
 
     private void enviaUsuarios() {
@@ -200,6 +230,14 @@ public class ServerThread extends Thread implements IThreadCallback, IChatCallba
         for (ConexaoUsuario con : conexoes) {
             envia(con, acao);
         }
+    }
+
+    private boolean broadcast(Object object) {
+        boolean b = true;
+        for (ConexaoUsuario con : conexoes) {
+            b =  b && envia(con, object);
+        }
+        return b;
     }
 
     private boolean envia(ConexaoUsuario con, Object object) {

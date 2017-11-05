@@ -12,11 +12,13 @@ public interface IChatCallback {
     boolean doLogin(Usuario usuario, ObjectOutputStream outputStream);
 
     boolean entraSala( Usuario usuario, Sala sala );
+    boolean saiSala( Usuario usuario, Sala sala );
 
     void doLogout( Usuario usuario );
 
     void sendMessage(Mensagem message);
 
     void listaUsuarios( Sala sala );
+    void listaSalas();
 
 }

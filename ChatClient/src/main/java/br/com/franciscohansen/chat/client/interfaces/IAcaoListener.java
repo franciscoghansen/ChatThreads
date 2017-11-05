@@ -7,7 +7,8 @@ import br.com.franciscohansen.chat.model.Usuario;
 import javax.swing.*;
 
 public interface IAcaoListener {
-
+    IAcaoListener setCallback( IListenerCallback callback );
+    IAcaoListener setFrame( JFrame frame );
     IAcaoListener setUsuario( Usuario u );
     IAcaoListener setSala( Sala s );
     IAcaoListener setTextArea(JTextArea tx );

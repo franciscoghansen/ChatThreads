@@ -2,6 +2,7 @@ package br.com.franciscohansen.chat.client.listener;
 
 import br.com.franciscohansen.chat.client.interfaces.IAcaoListener;
 import br.com.franciscohansen.chat.client.interfaces.IClientThread;
+import br.com.franciscohansen.chat.client.interfaces.IListenerCallback;
 import br.com.franciscohansen.chat.model.Acao;
 import br.com.franciscohansen.chat.model.Mensagem;
 import br.com.franciscohansen.chat.model.Sala;
@@ -19,6 +20,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AcaoListener implements IAcaoListener, ActionListener {
+
+    private JFrame frame;
     private Usuario usuario;
     private Sala sala;
     private JTextArea tx;
@@ -28,11 +31,24 @@ public class AcaoListener implements IAcaoListener, ActionListener {
     private JButton btnEnviar;
     private JCheckBox chkPrivado;
     private JTextField edtMsg;
+    private IListenerCallback callback;
 
 
     private final DefaultListModel<Sala> salaModel = new DefaultListModel<>();
     private final DefaultComboBoxModel<Usuario> usuarioModel = new DefaultComboBoxModel<>();
 
+
+    @Override
+    public IAcaoListener setCallback(IListenerCallback callback) {
+        this.callback = callback;
+        return this;
+    }
+
+    @Override
+    public IAcaoListener setFrame(JFrame frame) {
+        this.frame = frame;
+        return this;
+    }
 
     @Override
     public IAcaoListener setUsuario(Usuario u) {
@@ -139,9 +155,24 @@ public class AcaoListener implements IAcaoListener, ActionListener {
                 break;
             }
             case CRIA_SALA:
-            case EXCLUI_SALA:
             case LISTA_SALAS: {
                 atualizaSalas((List<Sala>) acao.getObjetoAcao());
+                break;
+            }
+            case EXCLUI_SALA:{
+                Sala sala = (Sala) acao.getObjetoAcao();
+                if( sala.equals( this.sala ) ){
+                    JOptionPane.showMessageDialog(null, "A sala atual foi removida pelo administrador!");
+                    if( this.callback != null ){
+                        this.callback.setDisconnected(true);
+                    }
+                    this.frame.dispose();
+                }
+                try {
+                    this.thd.enviaAcao(new Acao(EAcao.LISTA_SALAS));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             case ERRO: {
@@ -183,23 +214,22 @@ public class AcaoListener implements IAcaoListener, ActionListener {
                 !msg.getUsuarioDe().equals(this.usuario)) {
             return;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
         String line = sdf.format(Calendar.getInstance().getTime());
-        line += " - " + msg.getUsuarioDe().getNick() + " diz";
-
+        if (!msg.getTipoMensagem().equals(ETipoMensagem.ADMIN)) {
+            line += " - " + msg.getUsuarioDe().getNick() + " diz";
+        }
         if (!msg.getTipoMensagem().equals(ETipoMensagem.TODOS) &&
                 msg.getUsuarioPara() != null &&
                 msg.getUsuarioPara().getNick() != null &&
                 !msg.getUsuarioPara().getNick().isEmpty()) {
             line += " para " + msg.getUsuarioPara().getNick();
         }
-
         if (msg.getTipoMensagem().equals(ETipoMensagem.USUARIO_PRIVADA)) {
             line += " [PRIVADO]";
         }
         line += ":\n" + msg.getMensagem();
         addStringToText(line);
-
     }
 
     @Override

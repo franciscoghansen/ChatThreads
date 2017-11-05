@@ -8,6 +8,7 @@ import br.com.franciscohansen.chat.model.enums.ETipoMensagem;
 import br.com.franciscohansen.chat.server.interfaces.IServerCallback;
 import br.com.franciscohansen.chat.server.interfaces.IThreadCallback;
 import br.com.franciscohansen.chat.server.threads.ServerThread;
+import oracle.jrockit.jfr.JFR;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ServerMain implements ActionListener, IServerCallback {
+public class ServerMain extends JFrame implements ActionListener, IServerCallback {
 
 
     private JTextField edtPorta;
@@ -67,6 +68,12 @@ public class ServerMain implements ActionListener, IServerCallback {
     public ServerMain() {
         init();
         initBotoes();
+        setTitle("Servidor Chat Threads");
+        setContentPane(pnlServidor);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
     }
 
 
@@ -177,8 +184,12 @@ public class ServerMain implements ActionListener, IServerCallback {
     }
 
     private void excluiSala() {
-        //TODO finalizar
-
+        Sala sala = (Sala) lstAcoesSalas.getSelectedValue();
+        if( sala == null ){
+            JOptionPane.showMessageDialog(null, "Selecione uma sala para excluir" );
+            return;
+        }
+        this.serverThread.excluiSala( sala );
     }
 
     @Override
@@ -212,12 +223,11 @@ public class ServerMain implements ActionListener, IServerCallback {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame(ServerMain.class.getSimpleName());
-        frame.setContentPane(new ServerMain().pnlServidor);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.pack();
-        frame.setVisible(true);
+        ServerMain serverMain = new ServerMain();
+//        serverMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        serverMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        serverMain.pack();
+//        serverMain.setVisible(true);
     }
 
 

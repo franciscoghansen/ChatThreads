@@ -57,6 +57,14 @@ public class ChatThread extends Thread {
                                 callback.entraSala((Usuario) acao.getObjetoAcao(), acao.getSala());
                                 break;
                             }
+                            case SAI_SALA: {
+                                this.callback.saiSala((Usuario) acao.getObjetoAcao(), acao.getSala());
+                                break;
+                            }
+                            case LISTA_SALAS: {
+                                this.callback.listaSalas();
+                                break;
+                            }
                             case LISTA_USUARIOS: {
                                 Sala s = acao.getSala();
                                 if (s == null) {
@@ -67,8 +75,7 @@ public class ChatThread extends Thread {
                             }
                         }
                     }
-                } catch (IOException | ClassNotFoundException e) {
-                    continue;
+                } catch (IOException | ClassNotFoundException ignored) {
                 }
             }
 

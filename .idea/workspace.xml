@@ -2,40 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab14d0ad-f675-4353-9707-61972eb7dcb4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ChatForm$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ClientMain$1.class" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IListenerCallback.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IChatScreen.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/interfaces/IChatScreen.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ChatForm.class" afterPath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ChatForm.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ClientMain.class" afterPath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/ClientMain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/interfaces/IClientThread.class" afterPath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/interfaces/IClientThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/thread/ChatListenerThread.class" afterPath="$PROJECT_DIR$/ChatClient/target/classes/br/com/franciscohansen/chat/client/thread/ChatListenerThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/ServerMain.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/ServerMain.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IChatCallback.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IChatCallback.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IServerCallback.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IServerCallback.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IThreadCallback.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/interfaces/IThreadCallback.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ChatThread$1.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ChatThread$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ChatThread.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ChatThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ServerThread.class" afterPath="$PROJECT_DIR$/ChatServer/target/classes/br/com/franciscohansen/chat/server/threads/ServerThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Acao.class" afterPath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Acao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Sala.class" afterPath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Sala.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Usuario.class" afterPath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/Usuario.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/enums/EAcao.class" afterPath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/enums/EAcao.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/enums/ETipoMensagem.class" afterPath="$PROJECT_DIR$/classes/production/ChatCommons/br/com/franciscohansen/chat/model/enums/ETipoMensagem.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientThread.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java" afterPath="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Acao.java" afterPath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Acao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Sala.java" afterPath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Sala.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java" afterPath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/EAcao.java" afterPath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/EAcao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java" afterPath="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/ServerMain.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/ServerMain.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IServerCallback.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IServerCallback.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IThreadCallback.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IThreadCallback.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ChatThread.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ChatThread.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java" afterPath="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java" />
     </list>
@@ -55,8 +43,8 @@
       <file leaf-file-name="ServerMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/ServerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2754">
-              <caret line="179" column="24" lean-forward="false" selection-start-line="179" selection-start-column="24" selection-end-line="179" selection-end-column="24" />
+            <state relative-caret-position="901">
+              <caret line="71" column="32" lean-forward="false" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -65,18 +53,30 @@
       <file leaf-file-name="ServerThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2754">
-              <caret line="175" column="29" lean-forward="false" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
+            <state relative-caret-position="646">
+              <caret line="51" column="62" lean-forward="false" selection-start-line="51" selection-start-column="62" selection-end-line="51" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChatThread.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ChatThread.java">
+      <file leaf-file-name="AcaoListener.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="72" column="13" lean-forward="false" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="216" column="63" lean-forward="false" selection-start-line="216" selection-start-column="63" selection-end-line="216" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientMain.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1020">
+              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -117,7 +117,6 @@
       <list>
         <option value="$PROJECT_DIR$/ChatClient/src/main/java/MainForm.form" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/MainClass.form" />
-        <option value="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/thread/ChatListenerThread.java" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/MainForm.form" />
         <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/MainForm.java" />
@@ -139,17 +138,20 @@
         <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IServerCallback.java" />
         <option value="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java" />
         <option value="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Sala.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java" />
-        <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java" />
         <option value="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Acao.java" />
-        <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java" />
-        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java" />
+        <option value="$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form" />
         <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/ServerMain.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/ListenerCallback.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IListenerCallback.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java" />
+        <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java" />
         <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ChatThread.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java" />
+        <option value="$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java" />
+        <option value="$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java" />
       </list>
     </option>
   </component>
@@ -160,7 +162,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
+    <option name="x" value="120" />
     <option name="width" value="697" />
     <option name="height" value="775" />
   </component>
@@ -213,9 +215,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -370,26 +369,6 @@
             </path>
             <path>
               <item name="ChatThreads" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChatThreads" type="462c0819:PsiDirectoryNode" />
-              <item name="ChatServer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChatThreads" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChatThreads" type="462c0819:PsiDirectoryNode" />
-              <item name="ChatServer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="threads" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChatThreads" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
             <path>
@@ -418,11 +397,22 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="io" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ChatThreads" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="lang" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -436,7 +426,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="SearchEverywhereHistoryKey" value="cha&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java&#10;m&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java&#10;Usu&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java&#10;usu&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java&#10;Eaca&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/EAcao.java" />
+    <property name="SearchEverywhereHistoryKey" value="Cli&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java&#10;cha&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java&#10;m&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java&#10;Usu&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java&#10;usu&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java&#10;Eaca&#9;FILE&#9;file://D:/UTFPR/2017_02/AP23S/ChatThreads/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/EAcao.java" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -450,7 +440,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientMain">
+  <component name="RunManager" selected="Application.ServerMain">
     <configuration name="ClientMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -612,15 +602,17 @@
       <workItem from="1509631428063" duration="34902000" />
       <workItem from="1509829328830" duration="8493000" />
       <workItem from="1509844541204" duration="5103000" />
-      <workItem from="1509884787026" duration="25000" />
+      <workItem from="1509884787026" duration="8067000" />
+      <workItem from="1509898413950" duration="44000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50054000" />
+    <option name="totallyTimeSpent" value="58140000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -661,34 +653,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java</url>
-          <line>39</line>
-          <properties />
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="56" />
+      <option name="time" value="63" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2550">
-          <caret line="176" column="9" lean-forward="false" selection-start-line="176" selection-start-column="9" selection-end-line="176" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="42" lean-forward="false" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientCallback.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -701,7 +670,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1887">
           <caret line="127" column="38" lean-forward="false" selection-start-line="127" selection-start-column="38" selection-end-line="127" selection-end-column="38" />
-          <folding />
+          <folding>
+            <element signature="e#2210#2211#0" expanded="true" />
+            <element signature="e#2261#2262#0" expanded="true" />
+            <element signature="e#2643#2644#0" expanded="true" />
+            <element signature="e#2691#2692#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -810,14 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/br/com/franciscohansen/ChatCommons/1.0-SNAPSHOT/ChatCommons-1.0-SNAPSHOT.jar!/br/com/franciscohansen/chat/model/Sala.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -839,11 +805,6 @@
           <caret line="14" column="16" lean-forward="false" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Mensagem.java">
@@ -888,13 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Usuario.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -906,44 +860,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IChatScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/ConexaoUsuario.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="e#470#471#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="46" lean-forward="false" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -968,54 +891,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="36" lean-forward="false" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/Acao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="24" column="63" lean-forward="false" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
+        <state relative-caret-position="249">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#305#306#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#983#984#0" expanded="false" />
+            <element signature="e#1016#1017#0" expanded="false" />
+            <element signature="e#1168#1169#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java">
+    <entry file="file://$PROJECT_DIR$/ChatCommons/src/main/java/br/com/franciscohansen/chat/model/enums/ETipoMensagem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="171" column="26" lean-forward="false" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="26" />
+        <state relative-caret-position="102">
+          <caret line="6" column="9" lean-forward="false" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Enum.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <caret line="141" column="25" lean-forward="false" selection-start-line="141" selection-start-column="25" selection-end-line="141" selection-end-column="25" />
+          <folding>
+            <element signature="e#4357#4358#0" expanded="false" />
+            <element signature="e#4391#4392#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ClientMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java">
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IChatScreen.java" />
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IListenerCallback.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java">
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IAcaoListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="175" column="0" lean-forward="true" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+        <state relative-caret-position="151">
+          <caret line="9" column="60" lean-forward="false" selection-start-line="9" selection-start-column="60" selection-end-line="9" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1024,25 +970,72 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/ServerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="179" column="24" lean-forward="false" selection-start-line="179" selection-start-column="24" selection-end-line="179" selection-end-column="24" />
+        <state relative-caret-position="901">
+          <caret line="71" column="32" lean-forward="false" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java">
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/interfaces/IClientThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="175" column="29" lean-forward="false" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
+        <state relative-caret-position="102">
+          <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/ChatForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="50" column="32" lean-forward="false" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="32" />
+          <folding>
+            <element signature="e#2210#2211#0" expanded="true" />
+            <element signature="e#2261#2262#0" expanded="true" />
+            <element signature="e#2643#2644#0" expanded="true" />
+            <element signature="e#2691#2692#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/interfaces/IChatCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/thread/ChatListenerThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ChatThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="72" column="13" lean-forward="false" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
+        <state relative-caret-position="68">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatServer/src/main/java/br/com/franciscohansen/chat/server/threads/ServerThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="51" column="62" lean-forward="false" selection-start-line="51" selection-start-column="62" selection-end-line="51" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatClient/src/main/java/br/com/franciscohansen/chat/client/listener/AcaoListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="216" column="63" lean-forward="false" selection-start-line="216" selection-start-column="63" selection-end-line="216" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
